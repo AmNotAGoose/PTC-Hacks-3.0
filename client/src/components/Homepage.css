@@ -1,0 +1,146 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Main theme colors */
+:root {
+    --primary-green: #4CAF50;
+    --secondary-green: #81C784;
+    --dark-green: #388E3C;
+    --light-green: #C8E6C9;
+    --white: #FFFFFF;
+    --dark: #333333;
+}
+
+/* Hero section styles */
+.hero {
+    background-color: var(--secondary-green);
+    color: var(--dark);
+    text-align: left;
+    padding: 100px 0px;
+    min-height: 900px;
+}
+
+.hero-content {
+    margin: 0px 100px ;
+}
+
+.hero h1 {
+    font-size: 5em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 2.2em;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: var(--dark-green);
+    color: var(--white);
+    padding: 10px 20px;
+    text-decoration: none;
+    /* border-radius: 5px; */
+}
+
+.cta-button:hover {
+    background-color: var(--primary-green);
+}
+
+/* About section styles */
+.impact {
+    background-color: var(--light-green);
+    color: var(--dark);
+    padding: 100px 0px;
+    text-align: left;
+}
+
+.impact-content {
+    margin: 0px 100px;
+}
+
+.impact h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.impact p {
+    font-size: 1.2em;
+}
+
+/* Services section styles */
+.services {
+    background-color: var(--white);
+    color: var(--dark);
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.services h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.service-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--light-green);
+    border: 1px solid var(--primary-green);
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px;
+}
+
+.card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1em;
+}
+
+/* Footer styles */
+footer {
+    background-color: var(--dark-green);
+    color: var(--white);
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-content h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.footer-content p {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.social-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.2em;
+}
