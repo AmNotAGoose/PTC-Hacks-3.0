@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./db/connection.js');
 const cors = require('cors');
 const Foods = require('./models/Foods.js');
+const Vendors = require('./models/Vendors.js');
 const { Configuration, OpenAI } = require("openai"); 
 require("dotenv").config(); 
 
@@ -40,6 +41,31 @@ app.get('/foods', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+app.get('/vendors', async (req, res) => {
+    try {
+        const results = await Vendors.find({});
+        console.log('fetched vendors')
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching vendors:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.get('/suggest', async (req, res) => {
+    try {
+        const results = await Foods.find({});
+        const prompt = "Suggest what ingredients this food is made of: " + req.body + ", only picking from this list of foods: " + results.map(result => result.name) + ". ONLY INCLUDE A COMMA SEPERATED LIST AS YOUR RESPONSE, DONT ADD ANY EXTRA INFO. DO NOT PUT A PERIOD OR ANY PUNCTUATION.";
+        const aiResult = await getAiResult(prompt);
+        console.log('fetched suggestion:' + aiResult)
+        res.json(aiResult);
+    } catch (error) {
+        console.error('Error fetching foods:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 // app.get('/api/protected/messages', async (req, res) => {
 //     try {

@@ -1,29 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const foodSchema = new Schema({
+const vendorSchema = new Schema({
     name: {
         type: String,
         required: true,
         unique: false,
     },
-    type: {
-        type: String,
+    vendorId: {
+        type: Number,
         required: true,
         unique: false,
     },
-    vendors: {
+    coords: {
         type: Array,
-        required: true,
-        unique: false,
-    },
-    localReplacements: {
-        type: Array,
-        required: true,
-        unique: false,
-    },
-    isLocal: {
-        type: Boolean,
         required: true,
         unique: false,
     },
@@ -34,6 +24,6 @@ const foodSchema = new Schema({
     },
 });
 
-const Foods = mongoose.model('Food', foodSchema);
+const Vendors = mongoose.model('Vendor', vendorSchema);
 
-module.exports = Foods;
+module.exports = Vendors;

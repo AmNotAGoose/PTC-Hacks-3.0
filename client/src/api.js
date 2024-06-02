@@ -23,12 +23,22 @@ export const getAllFoods = async () => {
     }
 };
 
-export const getSuggestions = async (foods) => {
+export const getAllVendors = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api`);
+        const response = await axios.get(`${API_URL}/vendors`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching Hello World:', error);
+        console.error('Error fetching all vendors:', error);
+        throw error;
+    }
+};
+
+export const getSuggestions = async (newFood) => {
+    try {
+        const response = await axios.get(`${API_URL}/suggest`, newFood);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching suggestions:', error);
         throw error;
     }
 };
