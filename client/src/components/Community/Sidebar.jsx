@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import './Sidebar.css';
-import {getAllFoods} from '../../api'
+import { getAllFoods } from '../../api'
 
 const Sidebar = () => {
-  const [elements, setElements] = useState(["Element 1", "Element 2", "Element 3"]);
+  const [elements, setElements] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [options, setOptions] = useState([
-    { value: 'Element 4', label: 'Element 4' },
-    { value: 'Element 5', label: 'Element 5' },
-    { value: 'Element 6', label: 'Element 6' }
-  ])
-  // const options = [
-  //   { value: 'Element 4', label: 'Element 4' },
-  //   { value: 'Element 5', label: 'Element 5' },
-  //   { value: 'Element 6', label: 'Element 6' }
-  // ];
+  const [options, setOptions] = useState([])
 
   useEffect(() => {
-    async function getOptions(){
-      setOptions([await api.getAllFoods()]);
+     const getOptions = async () => {
+      // getAllFoods()
+      let foods = await getAllFoods();
+      foods.forEach(food => {
+        setOptions((prevFoods) => [...prevFoods, {value: food.name, label: food.name}]);
+      });
+      console.log(foods)
+      
       // setOptions([
-      //   { value: 'Element 4', label: 'Element 4' },
+      //   { value: 'Element 4', label: 'Element 10' },
       //   { value: 'Element 5', label: 'Element 5' },
       //   { value: 'Element 6', label: 'Element 6' }
       // ]);
     } 
-    getOptions;
+    getOptions()
+    // .then(() => {
+      console.log(options)
+    // });
     console.log('Component loaded for the first time');
 
   }, []);

@@ -1,0 +1,18 @@
+/* App.css */
+.container {
+    display: flex;
+    flex-direction: column; /* This ensures the components stack vertically */
+  }
+  
+  .sidebar {
+    /* Optional: Add your styles for Sidebar */
+    background-color: lightgray;
+    padding: 20px;
+  }
+  
+  .map {
+    /* Optional: Add your styles for Map */
+    background-color: lightblue;
+    padding: 20px;
+  }
+  
