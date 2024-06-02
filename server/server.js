@@ -9,7 +9,7 @@ require("dotenv").config();
 
 const getAiResult = async (prompt) => { 
     const openai = new OpenAI({organization: process.env.OPENAI_ORG_ID, project: process.env.OPENAI_PROJECT_ID, apiKey: process.env.OPENAI_SECRET_KEY});
-
+    console.log(prompt)
     const completion = await openai.chat.completions.create({
         messages: [{ role: "user", content: prompt }],
         model: "gpt-3.5-turbo-1106",
@@ -53,10 +53,27 @@ app.get('/vendors', async (req, res) => {
     }
 });
 
+
+app.get('/getvendor/:vendorId', async (req, res) => {
+    const vendorId = req.params.vendorId;
+    try {
+        const result = await Vendors.findOne({ vendorId: vendorId });
+        if (!result) {
+            return res.status(404).json({ error: 'Vendor not found' });
+        }
+        console.log('Fetched vendor with vendorId:', vendorId);
+        res.json(result);
+    } catch (error) {
+        console.error('Error fetching vendor:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.get('/suggest', async (req, res) => {
     try {
         const results = await Foods.find({});
-        const prompt = "Suggest what ingredients this food is made of: " + req.body + ", only picking from this list of foods: " + results.map(result => result.name) + ". ONLY INCLUDE A COMMA SEPERATED LIST AS YOUR RESPONSE, DONT ADD ANY EXTRA INFO. DO NOT PUT A PERIOD OR ANY PUNCTUATION.";
+        console.log(req)
+        const prompt = "Suggest what ingredients this meal is made of: " + req.query.newFood + ", while only picking from this list of foods: " + results.map(result => result.name) + ". ONLY INCLUDE A COMMA SEPERATED LIST AS YOUR RESPONSE, DONT ADD ANY EXTRA INFO. DO NOT PUT A PERIOD OR ANY PUNCTUATION.";
         const aiResult = await getAiResult(prompt);
         console.log('fetched suggestion:' + aiResult)
         res.json(aiResult);

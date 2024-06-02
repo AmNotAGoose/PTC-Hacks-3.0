@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import './Sidebar.css';
-import { getAllFoods, getSuggestions } from '../../api'
+import { getAllFoods, getSuggestions, getVendor, getAllVendors } from '../../api'
 
 const Sidebar = () => {
   const [elements, setElements] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [newFood, setNewFood] = useState('');
+  const [vendors, setVendors] = useState([]);
   const [options, setOptions] = useState([])
 
   useEffect(() => {
-    const getOptions = async () => {
+    const initSidebar = async () => {
       let foods = await getAllFoods();
+      // console.log(await getVendor(1));
+      const allVendors = await getAllVendors();
+      const newLocations = allVendors.map(vendor => ({
+        id: vendor.vendorId,
+        name: vendor.name
+      }));
+      setVendors(newLocations);
+
       let optionsArray = foods.map(food => ({
         value: food.name,
         label: food.name,
@@ -20,7 +29,7 @@ const Sidebar = () => {
       setOptions(optionsArray);
       console.log(foods)
     }
-    getOptions();
+    initSidebar();
     console.log('Component loaded for the first time');
   }, []);
 
@@ -34,7 +43,7 @@ const Sidebar = () => {
 
   const handleSubmit = async () => {
     if (newFood) {
-      const suggestions = await getSuggestions(newFood);
+      const suggestions = await getSuggestions({newFood: newFood});
       console.log(suggestions)
       suggestions.message.content.split(", ").forEach(suggestion => {
         const suggestionFood = options.find(option => {if(option.value === suggestion){return option}});
@@ -53,10 +62,20 @@ const Sidebar = () => {
         <div key={index} className="sidebar-item">
           {element[0]}
           <p>
+            {element[2].isLocal ? "This food is produced locally!" : "This food is not produced locally."}
+          </p>
+          <p>
             {element[2].localReplacements.length === 0 ? 
-              (element[2].isLocal ? "This food is produced locally!" : "No local food alternatives at this moment.") : 
+              (element[2].isLocal ? null : "No local food alternatives at this moment.") : 
               "Local alternatives: " + element[2].localReplacements.join(" or ")}
           </p>
+          <p>            
+            {element[2].vendors.length !== 0 ? "You can buy this locally at: " + element[2].vendors.map((vendor) => {
+              let foundVendor = vendors.find(v => v.id == vendor);
+              console.log(foundVendor);
+              return foundVendor ? foundVendor.name : null;
+            }).filter(info => info !== null).join(', ')
+             : null}</p>
         </div>
       ))}
       <Select

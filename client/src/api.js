@@ -33,9 +33,25 @@ export const getAllVendors = async () => {
     }
 };
 
-export const getSuggestions = async (newFood) => {
+
+export const getVendor = async (vendorId) => {
     try {
-        const response = await axios.get(`${API_URL}/suggest`, newFood);
+        const response = await axios.get(`${API_URL}/getvendor/${vendorId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching all vendors:', error);
+        throw error;
+    }
+};
+
+
+
+export const getSuggestions = async (newFood) => {
+    console.log(newFood)
+    try {
+        const response = await axios.get(`${API_URL}/suggest`, {
+            params: newFood
+        });
         return response.data;
     } catch (error) {
         console.error('Error fetching suggestions:', error);
